@@ -3,6 +3,7 @@
         "ms-azuretools.vscode-docker",
         "eamodio.gitlens",
         "mhutchie.git-graph",
-        "oderwat.indent-rainbow"
+        "oderwat.indent-rainbow",
+        "ckolkman.vscode-postgres"
     ]
 }
