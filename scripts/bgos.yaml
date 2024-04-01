@@ -25,21 +25,16 @@ paths:
       responses:
         '200':
           description: game joined
-          # content:
-          #   application/xml:
-          #     schema:
-          #       $ref: '#/components/schemas/Pet'
-          #   application/json:
-          #     schema:
-          #       $ref: '#/components/schemas/Pet'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JoinAccepted'
+        '410':
+          decscription: Game already started, no game available
         '405':
           description: Invalid input
-      # security:
-      #   - petstore_auth:
-      #       - 'write:pets'
-      #       - 'read:pets'
-      # requestBody:
-      #   $ref: '#/components/requestBodies/Pet'
+      requestBody:
+        $ref: '#/components/requestBodies/JoinRequest'
   /ready:
     post:
       tags:
@@ -49,22 +44,11 @@ paths:
       operationId: playerReady
       responses:
         '200':
-          description: player ready
-          # content:
-          #   application/xml:
-          #     schema:
-          #       $ref: '#/components/schemas/Pet'
-          #   application/json:
-          #     schema:
-          #       $ref: '#/components/schemas/Pet'
-        '405':
-          description: Invalid input
-      # security:
-      #   - petstore_auth:
-      #       - 'write:pets'
-      #       - 'read:pets'
-      # requestBody:
-      #   $ref: '#/components/requestBodies/Pet'
+          description: player readiness accepted
+        '404':
+          description: the plahyer is no more in the lobby
+      requestBody:
+        $ref: '#/components/requestBodies/PlayerReady'
   /order:
     post:
       tags:
@@ -128,6 +112,57 @@ paths:
       # security:
       #   - petstore_auth:
       #       - 'read:pets'
+components:
+  requestBodies:
+    JoinRequest:
+      content:
+        application/json:
+          # schema:
+          #   type: array
+          #   items:
+          #     $ref: '#/components/schemas/User'
+      description: Player infos for joining game
+      required: true
+    PlayerReady:
+      content:
+        application/json:
+          # schema:
+          #   type: array
+          #   items:
+          #     $ref: '#/components/schemas/User'
+      description: Player token in order to mark it ready
+      required: true
+  schemas:
+    JoinAccepted:
+      title: Join response
+      description: Information retrieved whenever a player join a game
+      # type: object
+      # properties:
+      #   id:
+      #     type: integer
+      #     format: int64
+      #   petId:
+      #     type: integer
+      #     format: int64
+      #   quantity:
+      #     type: integer
+      #     format: int32
+      #   shipDate:
+      #     type: string
+      #     format: date-time
+      #   status:
+      #     type: string
+      #     description: Order Status
+      #     enum:
+      #       - placed
+      #       - approved
+      #       - delivered
+      #   complete:
+      #     type: boolean
+      #     default: false
+      # xml:
+      #   name: Order
+
 #   /pet/findByTags:
 #     get:
 #       tags:
